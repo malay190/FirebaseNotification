@@ -3,7 +3,10 @@ package com.example.firebasenotification;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.app.Person;
+import androidx.core.app.RemoteInput;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -12,18 +15,25 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.MediaController;
 
+import java.util.List;
+
 import static com.example.firebasenotification.App.CHANNEL_1_ID;
 import static com.example.firebasenotification.App.CHANNEL_2_ID;
+import static com.example.firebasenotification.App.CHANNEL_3_ID;
+import static com.example.firebasenotification.App.CHANNEL_4_ID;
 
 public class MainActivity extends AppCompatActivity {
     EditText edit_title;
     EditText edit_message;
+
+    // Compatibility library for NotificationManager with fallbacks for older platforms.
     private NotificationManagerCompat notificationManager;
     private MediaSessionCompat mediaSessionCompat;
 
@@ -33,12 +43,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        notificationManager = NotificationManagerCompat.from(this);
+        notificationManager = NotificationManagerCompat.from(this);//Get a NotificationManagerCompat instance for a provided context.
 
         edit_title = (EditText) findViewById(R.id.edit_text_title);
-        edit_title.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         edit_message = (EditText) findViewById(R.id.edit_text_message);
-        edit_message.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+
+
+        //Allows interaction with media controllers, volume keys, media buttons, and transport controls.
+        //A MediaSession should be created when an app wants to publish media playback information or handle media keys.
+        // In general an app only needs one session for all playback, though multiple sessions can be created to provide
+        // finer grain controls of media.
         mediaSessionCompat = new MediaSessionCompat(this, "tag");
     }
 
@@ -55,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
         PendingIntent actonIntent = PendingIntent.getBroadcast(this, 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.apple);
+
+        // NotificationompatHelper: for accessing features in Notification.
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_1_ID)
                 .setSmallIcon(R.drawable.ic_call)
                 .setContentTitle(title)
@@ -126,7 +142,9 @@ public class MainActivity extends AppCompatActivity {
 
         Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.apple);
 
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_2_ID)
+        //Builder class for NotificationCompat objects.
+        //Allows easier control over all the flags, as well as help constructing the typical notification layouts.
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_3_ID)
                 .setSmallIcon(R.drawable.ic_music_note_black_24dp)
                 .setLargeIcon(largeIcon)
                 .setContentTitle(title)
@@ -146,7 +164,44 @@ public class MainActivity extends AppCompatActivity {
                 .setContentIntent(pendingIntent)
                 .build();
 
-        notificationManager.notify(2, notification);
+        notificationManager.notify(3, notification);
     }
 
+
+    //RemoteInput.Builder is used to create the instance of the class RemoteInout
+
+    //ProgressBar
+    public void sendOnChannel4(View v) {
+
+        final int progressMax = 100;
+        //Builder class for NotificationCompat objects.
+        //Allows easier control over all the flags, as well as help constructing the typical notification layouts.
+        final NotificationCompat.Builder notification = new NotificationCompat.Builder(this, CHANNEL_4_ID)
+                .setSmallIcon(R.drawable.ic_file_download)
+                .setContentTitle("Download")
+                .setContentText("download in progress")
+                .setOngoing(true)
+                .setOnlyAlertOnce(true)
+                .setColor(Color.RED)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setProgress(progressMax, 0, false);
+
+        notificationManager.notify(4, notification.build());
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SystemClock.sleep(10000);
+                for (int progress = 0; progress < 100; progress += 10) {
+                    notification.setProgress(progressMax, progress, false);
+                    notificationManager.notify(4, notification.build());
+                }
+                SystemClock.sleep(1000);
+                notification.setContentText("download finished.")
+                        .setProgress(0, 0, false)
+                        .setOngoing(false);
+                notificationManager.notify(4, notification.build());
+            }
+        }).start();
+    }
 }
