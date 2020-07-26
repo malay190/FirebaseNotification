@@ -26,24 +26,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="sendOnChannel1"
-        android:text="@string/send_on_channel_1" />
+        android:text="@string/big_picture_style" />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="sendOnChannel2"
-        android:text="@string/send_on_channel_2" />
+        android:text="@string/bigtext_style" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="sendOnChannel3"
-        android:text="@string/send_on_channel_3" />
+        android:text="@string/media_player_notification" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="sendOnChannel4"
-        android:text="@string/send_on_channel_4" />
+        android:text="@string/progressbar" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="sendOnChannel5"
+        android:text="@string/groupingofmessages" />
 
 
 

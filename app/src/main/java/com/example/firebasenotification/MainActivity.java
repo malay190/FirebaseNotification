@@ -3,31 +3,25 @@ package com.example.firebasenotification;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-import androidx.core.app.Person;
-import androidx.core.app.RemoteInput;
 
-import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.media.session.MediaSessionCompat;
-import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.MediaController;
 
-import java.util.List;
 
 import static com.example.firebasenotification.App.CHANNEL_1_ID;
 import static com.example.firebasenotification.App.CHANNEL_2_ID;
 import static com.example.firebasenotification.App.CHANNEL_3_ID;
 import static com.example.firebasenotification.App.CHANNEL_4_ID;
+import static com.example.firebasenotification.App.CHANNEL_5_ID;
 
 public class MainActivity extends AppCompatActivity {
     EditText edit_title;
@@ -191,10 +185,11 @@ public class MainActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                SystemClock.sleep(10000);
+                SystemClock.sleep(1000);
                 for (int progress = 0; progress < 100; progress += 10) {
                     notification.setProgress(progressMax, progress, false);
                     notificationManager.notify(4, notification.build());
+                    SystemClock.sleep(200);
                 }
                 SystemClock.sleep(1000);
                 notification.setContentText("download finished.")
@@ -204,4 +199,65 @@ public class MainActivity extends AppCompatActivity {
             }
         }).start();
     }
+
+    //Grouping of messages
+
+    //Starting in Android 7.0 (API level 24), you can display related notifications in a group automatically
+    // (previously called "bundled" notifications).
+    //But
+    //Group notification can also be applied to lower api level than 24
+    public void sendOnChannel5(View V) {
+
+        String title1 = "title1";
+        String title2 = "title2";
+        String message1 = "message1";
+        String message2 = "message2";
+        // NotificationompatHelper: for accessing features in Notification.
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_5_ID)
+                .setSmallIcon(R.drawable.ic_call)
+                .setContentTitle(title1)
+                .setContentText(message1)
+                .setColor(Color.RED)
+                .setAutoCancel(true)
+                .setGroup("example_group")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .build();
+
+        Notification notification1 = new NotificationCompat.Builder(this, CHANNEL_5_ID)
+                .setSmallIcon(R.drawable.ic_call)
+                .setContentTitle(title2)
+                .setContentText(message2)
+                .setColor(Color.RED)
+                .setAutoCancel(true)
+                .setGroup("example_group")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .build();
+
+        Notification summaryNotification = new NotificationCompat.Builder(this, CHANNEL_5_ID)
+                .setSmallIcon(R.drawable.ic_call)
+                .setContentTitle(title1)
+                .setContentText(message1)
+                .setColor(Color.RED)
+                .setStyle(new NotificationCompat.InboxStyle()
+                        .addLine(title2 + " " + message2)
+                        .addLine(title1 + " " + message1)
+                        .setBigContentTitle("2 new messages")
+                        .setSummaryText("malaykumar089@gmail.com"))
+                .setPriority(NotificationCompat.PRIORITY_LOW)
+                .setAutoCancel(true)
+                .setGroup("example_group")
+                .setGroupSummary(true)
+                .setGroupAlertBehavior(NotificationCompat.GROUP_ALERT_CHILDREN)
+                .build();
+
+        SystemClock.sleep(2000);
+        notificationManager.notify(1, notification);
+        SystemClock.sleep(2000);
+        notificationManager.notify(2, notification1);
+        SystemClock.sleep(2000);
+        notificationManager.notify(3, summaryNotification);
+
+
+    }
+
 }

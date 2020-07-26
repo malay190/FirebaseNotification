@@ -10,5 +10,10 @@
     <string name="title">Title</string>
     <string name="send_on_channel_3">Send on Channel 3</string>
     <string name="send_on_channel_4">Send on Channel 4</string>
+    <string name="groupingofmessages">GroupingOfMessages</string>
+    <string name="big_picture_style">Big Picture Style</string>
+    <string name="bigtext_style">BigText Style</string>
+    <string name="media_player_notification">Media player notification</string>
+    <string name="progressbar">ProgressBar</string>
 </resources>
 
