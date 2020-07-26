@@ -15,6 +15,7 @@ import android.os.SystemClock;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RemoteViews;
 
 
 import static com.example.firebasenotification.App.CHANNEL_1_ID;
@@ -22,6 +23,7 @@ import static com.example.firebasenotification.App.CHANNEL_2_ID;
 import static com.example.firebasenotification.App.CHANNEL_3_ID;
 import static com.example.firebasenotification.App.CHANNEL_4_ID;
 import static com.example.firebasenotification.App.CHANNEL_5_ID;
+import static com.example.firebasenotification.App.CHANNEL_6_ID;
 
 public class MainActivity extends AppCompatActivity {
     EditText edit_title;
@@ -258,6 +260,33 @@ public class MainActivity extends AppCompatActivity {
         notificationManager.notify(7, summaryNotification);
 
 
+    }
+
+
+    //Custom Notification
+    public void sendOnChannel6(View v) {
+
+        RemoteViews collapsedView = new RemoteViews(getPackageName(),
+                R.layout.collapsed_layput);
+        RemoteViews expandedView = new RemoteViews(getPackageName(),
+                R.layout.expanded_layout);
+
+        Intent clickIntent = new Intent(this, NotificationReceiver.class);
+        PendingIntent clickPendingIntent = PendingIntent.getBroadcast(this,
+                0, clickIntent, 0);
+        collapsedView.setTextViewText(R.id.text_view_collapsed_1, "Hii there!");
+
+        expandedView.setOnClickPendingIntent(R.id.image_view_expanded, clickPendingIntent);
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_6_ID)
+                .setSmallIcon(R.drawable.ic_fiber)
+                .setColor(Color.RED)
+                .setCustomContentView(collapsedView)
+                .setCustomBigContentView(expandedView)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .build();
+
+
+        notificationManager.notify(8, notification);
     }
 
 }

@@ -51,6 +51,12 @@
         android:onClick="sendOnChannel5"
         android:text="@string/groupingofmessages" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="sendOnChannel6"
+        android:text="Show Custom notification" />
+
 
 
 </LinearLayout>

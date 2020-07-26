@@ -16,6 +16,7 @@ public class App extends Application {
     public static final String CHANNEL_3_ID = "channel3";
     public static final String CHANNEL_4_ID = "channel4";
     public static final String CHANNEL_5_ID = "channel5";
+    public static final String CHANNEL_6_ID = "channel5";
 
     @Override
     public void onCreate() {
@@ -75,6 +76,13 @@ public class App extends Application {
                     NotificationManager.IMPORTANCE_HIGH
             );
             channel5.setDescription("This is channe5");
+
+            NotificationChannel channel6 = new NotificationChannel(
+                    CHANNEL_6_ID,
+                    "channel 6",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            channel5.setDescription("This is channe6");
 
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannelGroup(group1);

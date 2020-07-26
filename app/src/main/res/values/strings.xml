@@ -9,5 +9,7 @@
     <string name="bigtext_style">BigText Style</string>
     <string name="media_player_notification">Media player notification</string>
     <string name="progressbar">ProgressBar</string>
+    <string name="new_message">New Message!</string>
+    <string name="expand_to_show">Expand to show!</string>
 </resources>
 
