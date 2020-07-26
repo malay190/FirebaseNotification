@@ -2,14 +2,8 @@
     <string name="app_name">FirebaseNotification</string>
     <string name="description">An apple is an edible fruit produced by an apple tree. Apple trees are cultivated worldwide and are the most widely grown species in the genus Malus. The tree originated in Central Asia, where its wild ancestor is still found today. Apples have been grown for thousands of years in Asia and Europe and were brought to North America by European colonists. Apples have religious and mythological significance in many cultures, including Norse, Greek and European Christian tradition.</string>
     <string name="reply_Name">Me</string>
-    <string name="jim">jim</string>
-    <string name="Marry">Marry</string>
-    <string name="send_on_channel_1">Send on Channel 1</string>
-    <string name="send_on_channel_2">Send on Channel 2</string>
     <string name="message">Message</string>
     <string name="title">Title</string>
-    <string name="send_on_channel_3">Send on Channel 3</string>
-    <string name="send_on_channel_4">Send on Channel 4</string>
     <string name="groupingofmessages">GroupingOfMessages</string>
     <string name="big_picture_style">Big Picture Style</string>
     <string name="bigtext_style">BigText Style</string>

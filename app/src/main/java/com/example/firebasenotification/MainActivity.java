@@ -251,11 +251,11 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         SystemClock.sleep(2000);
-        notificationManager.notify(1, notification);
+        notificationManager.notify(5, notification);
         SystemClock.sleep(2000);
-        notificationManager.notify(2, notification1);
+        notificationManager.notify(6, notification1);
         SystemClock.sleep(2000);
-        notificationManager.notify(3, summaryNotification);
+        notificationManager.notify(7, summaryNotification);
 
 
     }
